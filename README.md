@@ -78,8 +78,8 @@ Action - Log Message: 😄 %B @[(UIViewControllerBuiltinTransitionViewAnimator *
 
 如果不清楚参数的类型, 可以通过同样的方法拿到: @[(NSObject *)$arg1 class]@
 ```
-## [XCode修改工程名(完美版) 
-](https://www.cnblogs.com/grimm/p/14831481.html)
+## XCode修改工程名(完美版)
+https://www.cnblogs.com/grimm/p/14831481.html
 
 ## 列出所有历史大文件
 ```
@@ -88,4 +88,19 @@ git rev-list --objects --all |
   awk '/^blob/ {printf "%s %s\n", $3, $4}' |
   sort -n -k1 |
   tail -n 20
+```
+
+## git clone 忽略 LFS
+https://stackoverflow.com/questions/42019529/how-to-clone-pull-a-git-repository-ignoring-lfs
+```
+Configuring the git-lfs smudge:
+
+git config --global filter.lfs.smudge "git-lfs smudge --skip -- %f"
+git config --global filter.lfs.process "git-lfs filter-process --skip"    
+git clone SERVER-REPOSITORY
+
+To undo this configuration, execute:
+
+git config --global filter.lfs.smudge "git-lfs smudge -- %f"
+git config --global filter.lfs.process "git-lfs filter-process"
 ```
