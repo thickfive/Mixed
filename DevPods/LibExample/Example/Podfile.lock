@@ -1,0 +1,23 @@
+PODS:
+  - LibExample (0.1.0)
+  - Quick (2.2.1)
+
+DEPENDENCIES:
+  - LibExample (from `../`)
+  - Quick (~> 2.2.0)
+
+SPEC REPOS:
+  trunk:
+    - Quick
+
+EXTERNAL SOURCES:
+  LibExample:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  LibExample: edae5643bb80dab33c6809092ac43dd3f5405827
+  Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
+
+PODFILE CHECKSUM: f3f73912264cb89e510dc0cb930e4a1e764f29b6
+
+COCOAPODS: 1.14.3

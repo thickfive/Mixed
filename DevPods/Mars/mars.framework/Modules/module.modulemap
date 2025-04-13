@@ -1,0 +1,6 @@
+framework module Mars {
+  umbrella header "Mars.h"
+  export *
+
+  module * { export * }
+}

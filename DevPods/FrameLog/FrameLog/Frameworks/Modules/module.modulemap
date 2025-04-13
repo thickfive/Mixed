@@ -1,0 +1,6 @@
+framework module xMars {
+  umbrella header "Mars.h"
+  export *
+
+  module * { export * }
+}

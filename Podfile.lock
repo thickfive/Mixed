@@ -1,0 +1,125 @@
+PODS:
+  - Alamofire (5.9.1)
+  - AsyncDisplayKit (0.1.0)
+  - CocoaAsyncSocket (7.6.5)
+  - CocoaLumberjack/Core (3.8.5)
+  - CocoaLumberjack/Swift (3.8.5):
+    - CocoaLumberjack/Core
+  - CollectionKit (2.4.0):
+    - CollectionKit/Core (= 2.4.0)
+  - CollectionKit/Core (2.4.0)
+  - FLEX (5.22.10)
+  - HandyJSON (5.0.2)
+  - Hero (1.6.3)
+  - IJKMediaFramework (0.1.0)
+  - IJKPlayer (0.1.0):
+    - IJKMediaFramework
+  - KSCrash (2.0.0-alpha.6):
+    - KSCrash/Installations (= 2.0.0-alpha.6)
+  - KSCrash/Core (2.0.0-alpha.6)
+  - KSCrash/DemangleFilter (2.0.0-alpha.6):
+    - KSCrash/Recording
+  - KSCrash/Filters (2.0.0-alpha.6):
+    - KSCrash/Recording
+    - KSCrash/RecordingCore
+    - KSCrash/ReportingCore
+  - KSCrash/Installations (2.0.0-alpha.6):
+    - KSCrash/DemangleFilter
+    - KSCrash/Filters
+    - KSCrash/Recording
+    - KSCrash/Sinks
+  - KSCrash/Recording (2.0.0-alpha.6):
+    - KSCrash/RecordingCore
+  - KSCrash/RecordingCore (2.0.0-alpha.6):
+    - KSCrash/Core
+  - KSCrash/ReportingCore (2.0.0-alpha.6):
+    - KSCrash/Core
+  - KSCrash/Sinks (2.0.0-alpha.6):
+    - KSCrash/Filters
+    - KSCrash/Recording
+  - KTVHTTPCache (3.0.2):
+    - CocoaAsyncSocket
+  - LibExample (0.1.0)
+  - LookinServer (1.2.6):
+    - LookinServer/Core (= 1.2.6)
+  - LookinServer/Core (1.2.6)
+  - Masonry (1.1.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - SnapKit (5.6.0)
+  - SwiftCubicSpline (2.0.0)
+  - XXLog (0.2.0)
+
+DEPENDENCIES:
+  - AsyncDisplayKit (from `DevPods/AsyncDisplayKit`)
+  - CocoaLumberjack/Swift
+  - CollectionKit
+  - FLEX
+  - HandyJSON
+  - Hero
+  - IJKMediaFramework (from `DevPods/IJKMediaFramework`)
+  - IJKPlayer (from `DevPods/IJKPlayer`)
+  - KSCrash (~> 2.0.0-alpha.6)
+  - KTVHTTPCache (~> 3.0.0)
+  - LibExample (from `DevPods/LibExample`)
+  - LookinServer
+  - Masonry
+  - Moya
+  - SnapKit
+  - SwiftCubicSpline
+  - XXLog (~> 0.2.0)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+    - CollectionKit
+    - FLEX
+    - HandyJSON
+    - Hero
+    - KSCrash
+    - KTVHTTPCache
+    - LookinServer
+    - Masonry
+    - Moya
+    - SnapKit
+    - SwiftCubicSpline
+    - XXLog
+
+EXTERNAL SOURCES:
+  AsyncDisplayKit:
+    :path: DevPods/AsyncDisplayKit
+  IJKMediaFramework:
+    :path: DevPods/IJKMediaFramework
+  IJKPlayer:
+    :path: DevPods/IJKPlayer
+  LibExample:
+    :path: DevPods/LibExample
+
+SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  AsyncDisplayKit: aca4591d5cd3a091ce15d0c5d1c541df53646323
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
+  CocoaLumberjack: 6a459bc897d6d80bd1b8c78482ec7ad05dffc3f0
+  CollectionKit: 8f01e7629185bb81072c4aa734d105df5c2d1c8b
+  FLEX: f21ee4f498eed3f8a1eded66b21939fd3b7a22ce
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  Hero: 419d43384355b3168512bd8ac6a33aadd3dc575b
+  IJKMediaFramework: dc6c8c2826e93afce01df1410107b359498d71d6
+  IJKPlayer: 3affc92b3c706bc22fcc3da076cc078de0266fa6
+  KSCrash: 1ae8ae7249b0138ccb0fb39f525d3431d826fdfe
+  KTVHTTPCache: 5711692cdf9a5ecfe829b1e16577deb3ffe3dc86
+  LibExample: a88066cbe1494bc05bd45dcc07aa9e75cf467114
+  LookinServer: de929b55f8fa2e241c18c39af3f900eaa9166389
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftCubicSpline: d8594b89a21fa8ecd45ef9e9d1a986ea2b28f3a2
+  XXLog: 91fc96d252c6bdd74c2e110f1f60acdadb3973ba
+
+PODFILE CHECKSUM: acf191bb80707d8b792b337d7e68bc611c7b050d
+
+COCOAPODS: 1.15.2
