@@ -33,9 +33,9 @@ class FullScreenViewController: UIViewController, AutorotateProtocol {
         let from = self.videoView.bounds
         let to = isPortrait ? CGRect(x: 0, y: 0, width: screenH, height: screenW) : CGRect(x: 0, y: 0, width: screenW, height: screenW * 9 / 16)
 
-        let isCustomAnimation = UIDevice.current.orientation.isFlat
+        let isCustomAnimation = UIDevice.current.orientation.isFlat // 竖排方向锁定关闭 + 平放
         if isCustomAnimation {
-            AnimationWrapperView(videoView).animate(from: from, to: to, duration: coordinator.transitionDuration, curve: .easeInOut) { rect in
+            AnimationWrapperView(nil).animate(from: from, to: to, duration: coordinator.transitionDuration, curve: .easeInOut) { rect in
                 VideoPlayer.shared.updatePlayerLayer(frame: rect)
                 print(#function, rect)
             }

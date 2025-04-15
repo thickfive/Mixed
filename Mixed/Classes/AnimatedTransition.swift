@@ -45,7 +45,7 @@ class EmptyViewController: UIViewController, HalfPanelViewDelegate {
         } else {
             let vc = HalfPanelViewController()
             vc.delegate = self
-            Router.shared.present(vc: vc, style: .overTabBarController)
+            Router.shared.present(vc: vc, style: .overNavigationController)
             // Router.shared.pushViewController(TranstionViewController())
         }
     }

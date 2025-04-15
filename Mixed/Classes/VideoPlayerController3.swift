@@ -6,7 +6,41 @@
 //
 
 import UIKit
-
+/*
+    1. CAAnimation 开始之后不能像 UIView 动画一样被 UIPercentDrivenInteractiveTransition 接管进度
+    2. 只能手动修改 layer.speed = 0 和 layer.timeoffset = xxx 控制进度
+    3. 注意是设置在 layer 上, 而不是在 animation 上, animation 属性修改只对动画开始之前有效
+    需要自定义 UIViewControllerInteractiveTransitioning 来实现
+    https://stackoverflow.com/questions/22868376/uipercentdriveninteractivetransition-with-cabasicanimation
+ */
+/*
+    1. UIView 动画 block 里对应的属性修改, 会在 layer 加上 key 为对应属性的动画
+    2. 但是只有 UIViewControllerAnimatedTransitioning 方法里的会被 UIPercentDrivenInteractiveTransition 控制进度
+    3. 说明不是简单的修改 layer.speed = 0 & layer.timeOffset = xxx 来实现的, 因为这会影响所有的动画效果
+    4. 实际上是分开修改的是动画的 speed 和 timeOffset, layer.presentation 的属性是多个动画效果叠加的结果
+    5. 动画一旦添加之后就不允许修改属性, 否则会崩溃, 但是 UIViewControllerAnimatedTransitioning 里面的动画属性可以改变, 不知道是如何实现的
+    6. 通过 animation(forKey:) 得到的动画对象不是原来的对象, 是一个不可以手动修改属性的副本, 只有系统自己能改
+    总结: CAAnimation 动画开始后属性不能修改, 轻则无效(修改原始对象), 重则崩溃(修改animation(forKey:)副本)
+        print(view.layer.animationKeys() ?? [], view.layer.presentation()!.opacity)
+        if let anim = view.layer.animation(forKey: "opacity") {
+            print("🙂", anim.speed, anim.timeOffset, anim.beginTime, CACurrentMediaTime())
+        }
+        if let anim = view.layer.animation(forKey: "backgroundColor") {
+            print("👻", anim.speed, anim.timeOffset, anim)
+        }
+        // onPanGesture(_:) 0.24133333333333334
+        // ["opacity", "UIPacingAnimationForAnimatorsKey", "backgroundColor"] 0.763347
+        // 🙂 1.0 0.0 31002.332901000005 31002.78448145834
+        // 👻 0.0 0.12066666666666667 <CABasicAnimation: 0x283a0d180>
+        // onPanGesture(_:) 0.24133333333333334
+        // ["opacity", "UIPacingAnimationForAnimatorsKey", "backgroundColor"] 0.763347
+        // 🙂 1.0 0.0 31002.332901000005 31002.817638041673
+        // 👻 0.0 0.12066666666666667 <CABasicAnimation: 0x283a0d180>
+        // 显而易见: 副本的 beginTime ~= CACurrentMediaTime()
+ 
+        // <CAAnimationGroup: 0x2822fe400> <CAAnimationGroup: 0x2822fe680>
+        // <CAAnimationGroup: 0x2822fe400> <CAAnimationGroup: 0x2822fe680> mainAsyncAfter(second: 0.1)
+ */
 class VideoPlayerController3: VideoPlayerController, CAAnimationDelegate {
     
     override func onPanGesture(_ ges: UIPanGestureRecognizer) {
