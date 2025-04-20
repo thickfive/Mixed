@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var classes: [UIViewController.Type] = [
+        KeyboardViewController.self,
         VideoListViewController.self, //
         StreamViewController.self,
         WebKitViewController.self,
