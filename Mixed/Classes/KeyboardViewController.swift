@@ -144,12 +144,15 @@ class KeyboardViewController3: UIViewController, UINavigationControllerDelegate 
 
     /// 自定义转场动画
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let window = UIApplication.shared.windows.last,
-            let windowClass = NSClassFromString("UITextEffectsWindow"), window.isKind(of: windowClass),
-            let keyboardView = window.rootViewController?.view.subviews.first
-            {
+        // UIApplication.shared.windows
+        let windows = UIApplication.shared.connectedScenes.flatMap({ ($0 as? UIWindowScene)?.windows ?? [] })
+        if let keyboardWindowClass = NSClassFromString("UITextEffectsWindow"),
+            let keyboardWindow = windows.first(where: { $0.isKind(of: keyboardWindowClass )}),
+            let keyboardView = keyboardWindow.rootViewController?.view.subviews.first {
             // 想要截图键盘只能用全屏截图, 并且参数只能用false
-            let screenSnapshot = window.screen.snapshotView(afterScreenUpdates: false)
+            // let screenSnapshot = keyboardWindow.screen.snapshotView(afterScreenUpdates: false)
+            // keyboardWindow.screen 有时候（比如切换键盘）截不到图，改用 UIScreen.main
+            let screenSnapshot = UIScreen.main.snapshotView(afterScreenUpdates: false)
             withoutAnimation {
                 self.textField.resignFirstResponder()
             }
@@ -164,6 +167,7 @@ class KeyboardViewController3: UIViewController, UINavigationControllerDelegate 
             keyboardSnapshot.addSubview(screenSnapshot)
             view.addSubview(keyboardSnapshot)
         }
+
         if operation == .pop {
             return self
         }

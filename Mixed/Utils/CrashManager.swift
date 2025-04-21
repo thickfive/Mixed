@@ -18,11 +18,21 @@ import KSCrash
 class CrashManager {
     static let shared = CrashManager()
     
-    func setup() {
 #if canImport(KSCrash)
-        let installation = CrashInstallationStandard.shared
-        installation.url = URL(string: "http://192.168.1.100:8088/uploadCrash")!
+    func setup() {
+        // 遇到系统调用显示为 <redacted> 如何处理
+        // https://github.com/kstenerud/KSCrash/issues/86#issuecomment-185243609
+        // https://github.com/Zuikyo/iOS-System-Symbols
+        // 1. Build Settings - Debug Infomation Format - 设置为 DWARF with dSYM File，这样才能在编译产物目录拿到 dSYM 文件。Debug/Release 模式可以根据具体需要分别设置
+        // 2. 以 Apple 格式发送崩溃日志
+        // 3. 用 dSYM 文件和 Apple 格式崩溃日志手动解析即可
         
+        setupCrashInstallation(crashInstallationEmail())
+    }
+    
+    /// 不同的 CrashInstallation 有各自默认的 filters 设置方式，不能随意添加
+    /// - Parameter installation: CrashInstallation
+    func setupCrashInstallation(_ installation: CrashInstallation) {
         // Optional: Add an alert confirmation (recommended for email installation)
         installation.addConditionalAlert(
             withTitle: "Crash Detected",
@@ -30,11 +40,7 @@ class CrashManager {
             yesAnswer: "Sure!",
             noAnswer: "No thanks"
         )
-        
-        // Optional: 以 Apple 崩溃日志格式发送
-//        let filter = CrashReportFilterAppleFmt.init(reportStyle: AppleReportStyle.symbolicated)
-//        installation.addPreFilter(filter)
-        
+
         // Install the crash reporting system
         let config = KSCrashConfiguration()
         config.monitors = [.all] //[.machException, .signal]
@@ -44,7 +50,27 @@ class CrashManager {
         } catch {
             Log.error(error, tag: .crash)
         }
-#endif
     }
+    
+    func crashInstallationEmail() -> CrashInstallationEmail {
+        let installation = CrashInstallationEmail.shared
+        installation.recipients = ["email@xxx.com"]
+        installation.setReportStyle(.apple, useDefaultFilenameFormat: true)
+        return installation
+    }
+    
+    func crashInstallationStandard() -> CrashInstallationStandard {
+        let installation = CrashInstallationStandard.shared
+        installation.url = URL(string: "http://192.168.1.100:8088/uploadCrash")!
+        // Optional: 以 Apple 格式发送崩溃日志
+        let filter = CrashReportFilterAppleFmt.init(reportStyle: AppleReportStyle.symbolicated)
+        installation.addPreFilter(filter)
+        return installation
+    }
+#else
+    func setup() {
+        //
+    }
+#endif
 }
 
