@@ -27,7 +27,7 @@ class CrashManager {
         // 2. 以 Apple 格式发送崩溃日志
         // 3. 用 dSYM 文件和 Apple 格式崩溃日志手动解析即可
         
-        setupCrashInstallation(crashInstallationEmail())
+        setupCrashInstallation(crashInstallationStandard())
     }
     
     /// 不同的 CrashInstallation 有各自默认的 filters 设置方式，不能随意添加

@@ -21,7 +21,9 @@ class KeyboardViewController: UIViewController {
 /// - 在其他地方调用 textField.resignFirstResponder()，键盘向下消失
 /// c. 自定义动画（自定义手势+键盘截图）
 /// - 在pop动画开始之前键盘截图，收起键盘，用截图 _UIReplicantView 代替。实际上系统动画对键盘就是这么处理的
-/// ⚠️：切换其他键盘有问题
+/// - ⚠️：切换其他键盘（搜狗输入法）有问题，反复快速 pop & cancel 就会崩溃，通过限制该场景发生的频率从而减少崩溃的概率
+/// - ❌：这个是 iOS 16 的系统 bug，https://developer.apple.com/forums/thread/715176?answerId=745522022#745522022
+/// - ✅：解决方案 https://github.com/SnowGirls/Objc-Deallocating
 """
     lazy var textLabel: UILabel = {
         let textLabel = UILabel(frame: CGRect(x: 20, y: 0, width: self.view.bounds.width - 40, height: self.view.bounds.height))
@@ -180,15 +182,19 @@ class KeyboardViewController3: UIViewController, UINavigationControllerDelegate 
         let currX = ges.location(in: view.window!).x
         let startX = interactiveStartLocation?.x ?? currX
         let progress = max((currX - startX) / view.window!.bounds.width, 0)
+        let velocity = ges.velocity(in: view.window!).x
+        let estimatedProgress = max((currX + velocity - startX) / view.window!.bounds.width, 0)
         switch ges.state {
         case .began:
             interactiveTransition = UIPercentDrivenInteractiveTransition()
             interactiveStartLocation = ges.location(in: view.window!)
-            Router.shared.popViewController()
+            if estimatedProgress > 0 {
+                Router.shared.popViewController()
+            }
         case .changed:
             interactiveTransition?.update(progress)
         default:
-            progress < 0.5 ? interactiveTransition?.cancel() : interactiveTransition?.finish()
+            estimatedProgress < 0.5 ? interactiveTransition?.cancel() : interactiveTransition?.finish()
             interactiveTransition = nil
             interactiveStartLocation = nil
         }

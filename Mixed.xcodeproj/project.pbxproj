@@ -43,6 +43,7 @@
 		9324F9A42C58DD020047A37E /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9324F9A32C58DD020047A37E /* Tests.swift */; };
 		9338F8202C6223BC00A9277B /* UnsafePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338F81F2C6223BC00A9277B /* UnsafePointer.swift */; };
 		9338F8222C66374800A9277B /* SmoothLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9338F8212C66374800A9277B /* SmoothLine.swift */; };
+		9369C2282DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C2272DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.m */; };
 		9374A0482B6554BC005D0616 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9374A0472B6554BC005D0616 /* AppDelegate.swift */; };
 		9374A04C2B6554BC005D0616 /* ViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9374A04B2B6554BC005D0616 /* ViewControllers.swift */; };
 		9374A04F2B6554BC005D0616 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9374A04D2B6554BC005D0616 /* Main.storyboard */; };
@@ -118,6 +119,8 @@
 		9324F9A32C58DD020047A37E /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		9338F81F2C6223BC00A9277B /* UnsafePointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsafePointer.swift; sourceTree = "<group>"; };
 		9338F8212C66374800A9277B /* SmoothLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmoothLine.swift; sourceTree = "<group>"; };
+		9369C2262DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+FixCrashOnInputKeyboard.h"; sourceTree = "<group>"; };
+		9369C2272DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+FixCrashOnInputKeyboard.m"; sourceTree = "<group>"; };
 		9374A0442B6554BC005D0616 /* Mixed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mixed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9374A0472B6554BC005D0616 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9374A04B2B6554BC005D0616 /* ViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllers.swift; sourceTree = "<group>"; };
@@ -339,6 +342,8 @@
 		931FF71F2C4FB91C00811B00 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9369C2262DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.h */,
+				9369C2272DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.m */,
 				93017F592C8F156800238C80 /* CrashManager.swift */,
 				93017F612C9464AC00238C80 /* Log */,
 				931FF7202C4FB92C00811B00 /* Utils.swift */,
@@ -586,6 +591,7 @@
 				9324F9A22C58C79C0047A37E /* BezierCurve.swift in Sources */,
 				93C78E242DA8FFDD0048DBF4 /* VideoPlayerController.swift in Sources */,
 				93017F5C2C8F156800238C80 /* LogManager.swift in Sources */,
+				9369C2282DB7E0A200239043 /* UIWindow+FixCrashOnInputKeyboard.m in Sources */,
 				93C78E202DA8F22B0048DBF4 /* VideoListViewController.swift in Sources */,
 				93017F602C919B1E00238C80 /* FullScreen.swift in Sources */,
 				93C78E282DA9025C0048DBF4 /* VideoPlayerController3.swift in Sources */,
