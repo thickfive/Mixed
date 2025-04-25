@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var classes: [UIViewController.Type] = [
         KeyboardViewController.self,
         VideoListViewController.self, //
+        CrashViewController.self,
         StreamViewController.self,
         WebKitViewController.self,
         FullScreenViewController.self,

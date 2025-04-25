@@ -63,6 +63,17 @@ class KeyboardViewController2: UIViewController {
         view.backgroundColor = .white
         view.addSubview(textField)
         textFieldBecomeFirstResponder()
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main) { notification in
+            if let userInfo = notification.userInfo,
+               let frameEnd = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+               let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
+            {
+                UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve)) {
+                    self.textField.frame.origin.y = frameEnd.minY - self.textField.frame.height - 12
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -17,7 +17,7 @@ target 'Mixed' do
   pod 'FLEX', :configurations => ['Debug']
   pod 'CocoaLumberjack/Swift'
 #  pod 'PLCrashReporter'
-  pod 'KSCrash', '~> 2.0.0-alpha.6'
+  pod 'KSCrash', '~> 2.0.0'
   
   # DevPods
   pod 'LibExample', :path => 'DevPods/LibExample'
@@ -37,5 +37,10 @@ target 'Mixed' do
   pod 'KTVHTTPCache', '~> 3.0.0'
   pod 'SwiftCubicSpline'
 #  pod 'YYCache'
+end
+
+target 'Keyboard' do
+  use_frameworks! :linkage => :static
+  pod 'SnapKit'
 end
 

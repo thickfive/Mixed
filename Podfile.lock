@@ -14,27 +14,27 @@ PODS:
   - IJKMediaFramework (0.1.0)
   - IJKPlayer (0.1.0):
     - IJKMediaFramework
-  - KSCrash (2.0.0-alpha.6):
-    - KSCrash/Installations (= 2.0.0-alpha.6)
-  - KSCrash/Core (2.0.0-alpha.6)
-  - KSCrash/DemangleFilter (2.0.0-alpha.6):
+  - KSCrash (2.0.0):
+    - KSCrash/Installations (= 2.0.0)
+  - KSCrash/Core (2.0.0)
+  - KSCrash/DemangleFilter (2.0.0):
     - KSCrash/Recording
-  - KSCrash/Filters (2.0.0-alpha.6):
+  - KSCrash/Filters (2.0.0):
     - KSCrash/Recording
     - KSCrash/RecordingCore
     - KSCrash/ReportingCore
-  - KSCrash/Installations (2.0.0-alpha.6):
+  - KSCrash/Installations (2.0.0):
     - KSCrash/DemangleFilter
     - KSCrash/Filters
     - KSCrash/Recording
     - KSCrash/Sinks
-  - KSCrash/Recording (2.0.0-alpha.6):
+  - KSCrash/Recording (2.0.0):
     - KSCrash/RecordingCore
-  - KSCrash/RecordingCore (2.0.0-alpha.6):
+  - KSCrash/RecordingCore (2.0.0):
     - KSCrash/Core
-  - KSCrash/ReportingCore (2.0.0-alpha.6):
+  - KSCrash/ReportingCore (2.0.0):
     - KSCrash/Core
-  - KSCrash/Sinks (2.0.0-alpha.6):
+  - KSCrash/Sinks (2.0.0):
     - KSCrash/Filters
     - KSCrash/Recording
   - KTVHTTPCache (3.0.2):
@@ -61,7 +61,7 @@ DEPENDENCIES:
   - Hero
   - IJKMediaFramework (from `DevPods/IJKMediaFramework`)
   - IJKPlayer (from `DevPods/IJKPlayer`)
-  - KSCrash (~> 2.0.0-alpha.6)
+  - KSCrash (~> 2.0.0)
   - KTVHTTPCache (~> 3.0.0)
   - LibExample (from `DevPods/LibExample`)
   - LookinServer
@@ -110,7 +110,7 @@ SPEC CHECKSUMS:
   Hero: 419d43384355b3168512bd8ac6a33aadd3dc575b
   IJKMediaFramework: dc6c8c2826e93afce01df1410107b359498d71d6
   IJKPlayer: 3affc92b3c706bc22fcc3da076cc078de0266fa6
-  KSCrash: 1ae8ae7249b0138ccb0fb39f525d3431d826fdfe
+  KSCrash: ad271a7799f0a2841be0fb7d6bd105444c440832
   KTVHTTPCache: 5711692cdf9a5ecfe829b1e16577deb3ffe3dc86
   LibExample: a88066cbe1494bc05bd45dcc07aa9e75cf467114
   LookinServer: de929b55f8fa2e241c18c39af3f900eaa9166389
@@ -120,6 +120,6 @@ SPEC CHECKSUMS:
   SwiftCubicSpline: d8594b89a21fa8ecd45ef9e9d1a986ea2b28f3a2
   XXLog: 91fc96d252c6bdd74c2e110f1f60acdadb3973ba
 
-PODFILE CHECKSUM: acf191bb80707d8b792b337d7e68bc611c7b050d
+PODFILE CHECKSUM: a483f9df9bccb455ffb9f415d316552a1e7e5653
 
 COCOAPODS: 1.15.2

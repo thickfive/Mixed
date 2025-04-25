@@ -63,7 +63,7 @@ class CrashManager {
         let installation = CrashInstallationStandard.shared
         installation.url = URL(string: "http://192.168.1.100:8088/uploadCrash")!
         // Optional: 以 Apple 格式发送崩溃日志
-        let filter = CrashReportFilterAppleFmt.init(reportStyle: AppleReportStyle.symbolicated)
+        let filter = CrashReportFilterAppleFmt.init(reportStyle: AppleReportStyle.symbolicatedSideBySide)
         installation.addPreFilter(filter)
         return installation
     }
