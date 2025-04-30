@@ -16,7 +16,6 @@
         Class class = objc_getClass("UIWindow");
         SEL originalSelector = @selector(sendEvent:);
         SEL swizzledSelector = @selector(sendEventEx:);
-        
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         method_exchangeImplementations(originalMethod, swizzledMethod);
@@ -38,9 +37,6 @@
         for (UITouch *touch in event.allTouches) {
             NSString *windowName = NSStringFromClass([touch.window class]);
             if ([windowName isEqualToString:@"UIRemoteKeyboardWindow"]) {
-                
-                [UIWindow addSubviewsOverKeyboardWindow:touch.window];
-                
                 UIView* view = touch.view;
                 UIResponder *arg2 = view.nextResponder;
                 NSString* responderClassName = NSStringFromClass([arg2 class]);
@@ -98,6 +94,82 @@
                 [hostView addSubview:textLabel];
             }
         }
+    }
+}
+
+@end
+
+
+// #pragma mark - UIApplication (SendEvent)
+// @interface UIApplication (SendEvent)
+// 
+// @end
+// 
+// @implementation UIApplication (SendEvent)
+// 
+// + (void)load {
+//     static dispatch_once_t onceToken;
+//     dispatch_once(&onceToken, ^{
+//         Class class = objc_getClass("UIApplication");
+//         SEL originalSelector = @selector(sendEvent:);
+//         SEL swizzledSelector = @selector(sendEventEx:);
+//         Method originalMethod = class_getInstanceMethod(class, originalSelector);
+//         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+//         method_exchangeImplementations(originalMethod, swizzledMethod);
+//     });
+// }
+// 
+// - (void)sendEventEx:(UIEvent *)event {
+//     NSLog(@"-[UIApplication sendEvent:]");
+//     [self sendEventEx: event];
+// }
+// 
+// @end
+
+#pragma mark - UIView (KeyboardWindow)
+@interface UIView (KeyboardWindow)
+
+@end
+
+@implementation UIView (KeyboardWindow)
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = objc_getClass("UIView");
+        SEL originalSelector = @selector(initWithFrame:);
+        SEL swizzledSelector = @selector(initWithFrameEx:);
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        method_exchangeImplementations(originalMethod, swizzledMethod);
+    });
+}
+
+- (void)initWithFrameEx:(CGRect)frame {
+    if ([NSStringFromClass(self.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self addSubviewsOverKeyboardWindow:(UIWindow *)self];
+        });
+    }
+    [self initWithFrameEx:frame];
+}
+
+- (void)addSubviewsOverKeyboardWindow:(UIWindow *)window {
+    if (window.subviews.count > 0) {
+        // UIInputSetContainerView
+        UIView *containerView = window.subviews[0];
+        
+        UILabel *textLabel = [UILabel new];
+        textLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.8];
+        textLabel.font = [UIFont systemFontOfSize:12];
+        textLabel.textColor = [UIColor whiteColor];
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.text = @"长按🌐切换到XX输入法";
+        [textLabel sizeToFit];
+        textLabel.layer.cornerRadius = 20;
+        textLabel.layer.masksToBounds = YES;
+        textLabel.frame = CGRectMake(20, containerView.bounds.size.height - 120, textLabel.bounds.size.width + 20, 40);
+        [containerView addSubview:textLabel];
     }
 }
 
