@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
     // 立即释放, 不需要 autoreleasepool
     for (int i = 0; i < 10; i++) {
         NSLog(@">>> loop start %d", i);
-        ObjcAutorelease *obj = [ObjcAutorelease new];
+        // ObjcAutorelease *obj = [ObjcAutorelease new];
         NSLog(@"<<< loop end %d", i);
     }
                                     

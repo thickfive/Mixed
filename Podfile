@@ -7,6 +7,11 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
     end
+    if target.name == 'HandyJSON' 
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_COMPILATION_MODE'] = 'incremental'
+      end
+    end
   end
 end
 
