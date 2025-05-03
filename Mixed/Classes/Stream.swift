@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension Stream.Status: CustomStringConvertible {
+extension Stream.Status: @retroactive CustomStringConvertible {
 
     public var description: String {
         switch self {

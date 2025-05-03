@@ -40,21 +40,21 @@ class UnsafePointerController: UIViewController {
         ptr1[3] = 0x44
         debugPrint(ptr0)    // <0000c160>: 44332211
         
-        var num: Int = 0x11223344
-        // dangling pointer, 空悬指针: 指向内容可能已经被释放, 野指针: 没有初始化的指针, 指向未知地址
-        let pt0 = UnsafePointer<Int>(&num)
-        debugPrint(pt0)     // <6f42c140>: 11223344
-        let pt1 = UnsafeMutablePointer<Int>(mutating: pt0)
-        pt1[0] = 0xaa
-        debugPrint(pt1)     // <6f42c140>: 000000aa
-        let pt2 = UnsafeMutableBufferPointer<Int>.init(start: pt1, count: 8)
-        pt2[1] = 0xbb
-        debugPrint(pt2[1])  // <????????>: 000000bb (Int)
-        let pt3 = UnsafeMutableRawPointer(pt1)
-        debugPrint(pt3)     // <6f42c140>: 000000aa
-        let pt4 = UnsafeMutableRawBufferPointer.init(start: pt3, count: 8)
-        pt4[3] = 0xcc
-        debugPrint(pt4)     // <6f42c140>: cc0000aa
+        // var num: Int = 0x11223344
+        // // dangling pointer, 空悬指针: 指向内容可能已经被释放, 野指针: 没有初始化的指针, 指向未知地址
+        // let pt0 = UnsafePointer<Int>(&num)
+        // debugPrint(pt0)     // <6f42c140>: 11223344
+        // let pt1 = UnsafeMutablePointer<Int>(mutating: pt0)
+        // pt1[0] = 0xaa
+        // debugPrint(pt1)     // <6f42c140>: 000000aa
+        // let pt2 = UnsafeMutableBufferPointer<Int>.init(start: pt1, count: 8)
+        // pt2[1] = 0xbb
+        // debugPrint(pt2[1])  // <????????>: 000000bb (Int)
+        // let pt3 = UnsafeMutableRawPointer(pt1)
+        // debugPrint(pt3)     // <6f42c140>: 000000aa
+        // let pt4 = UnsafeMutableRawBufferPointer.init(start: pt3, count: 8)
+        // pt4[3] = 0xcc
+        // debugPrint(pt4)     // <6f42c140>: cc0000aa
     }
 }
 

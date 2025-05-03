@@ -14,35 +14,7 @@ struct Cat: HandyJSON {
 }
 
 func runTest() {
-    
-    Log.info("test log 0")
-    Log.info("test log 1", "test log 11")
-    Log.info("test log 2", "test log 22", tag: "T")
-    Log.debug("error", tag: .test)
-    Log.debug("tag test", tag: .network)
-    Log.info(Cat(), UIView())
-    return;
-    SwiftAutorelease.test()
-    ObjcAutorelease.test()
-    Macros.test()
-    return;
-    print(NSStringFromClass(LibExampleClass.self)) // LibExample.LibExampleClass
-    print(NSStringFromClass(LibExampleClass.classForCoder())) // LibExample.LibExampleClass
-    let jsonString = """
-    {"data":null,"code":0,"msg":""}
-    """
-    do {
-        let res = try JSONDecoder().decode(Resp.self, from: jsonString.data(using: .utf8)!)
-        print(res)
-    } catch {
-        print(error)
-    }
-    
-    var obj = Object.init(viewType: .a1)
-    obj.viewType = .a1
-    obj.viewType = .a2
-    obj.viewType = .a2
-    obj.viewType = .a1
+    //
 }
 
 struct Object {

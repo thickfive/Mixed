@@ -148,7 +148,7 @@ class TestViewController: UIViewController {
         videoContainerView = UIView(frame: view.bounds)
         view.addSubview(playView)
         
-        let videoURL = URL(string: "https://sunny-sd.oss-cn-shenzhen.aliyuncs.com/output_image/319473/qc_319473_731142_22/9d252382b136c521a8f549f30dec885a.mp4")!
+        let _ = URL(string: "https://sunny-sd.oss-cn-shenzhen.aliyuncs.com/output_image/319473/qc_319473_731142_22/9d252382b136c521a8f549f30dec885a.mp4")!
         playView.player.play()
         
         setBlurFilter()
@@ -197,7 +197,7 @@ extension TestViewController {
         clampFilter.setValue(ciImage, forKey: kCIInputImageKey)
         
         guard let image = clampFilter.outputImage else {
-            print(clampFilter, 1)
+            print(clampFilter!, 1)
             return
         }
         print(image)
