@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '15.0'
+inhibit_all_warnings!
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
