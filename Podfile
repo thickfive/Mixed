@@ -28,7 +28,7 @@ target 'Mixed' do
 #  pod 'Mars', :path => 'DevPods/Mars' # 需要设置 C++ and Objcetive-C Interoperability 为 C++ / Objcetive-C++, 会与 C / Objcetive-C 冲突, 不要轻易使用
 
   # Pods
-  pod 'Masonry'
+#  pod 'Masonry'
   pod 'HandyJSON'
   pod 'SnapKit'
   pod 'Moya'

@@ -8,9 +8,6 @@
 
 + (void)load
 {
-    // float os = [UIDevice currentDevice].systemVersion.floatValue;
-    // if (os >= 16.0 && os < 17.0) {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         Class class = objc_getClass("UIWindow");
@@ -20,8 +17,6 @@
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
         method_exchangeImplementations(originalMethod, swizzledMethod);
     });
-        
-    // }
 }
 
 - (void)sendEventEx:(UIEvent *)event {
@@ -61,97 +56,54 @@
     return false;
 }
 
-// iOS 16 之后已经没办法通过常规手段拿到 UIRemoteKeyboardWindow 了
-// 上面的代码是用来修复 iOS 16 键盘崩溃的, 它刚好可以遍历到 UIRemoteKeyboardWindow
-// 其他代码可以不要, 可能涉及到私有 API
-+ (void)addSubviewsOverKeyboardWindow:(UIWindow *)window {
-    if (window.subviews.count > 0) {
-        // UIInputSetContainerView
-        UIView *containerView = window.subviews[0];
-        
-        // UIInputSetHostView
-        if (containerView.subviews.count > 0) {
-            UIView *hostView = containerView.subviews[0];
-            
-            BOOL isAdded = NO;
-            for (UIView *view in hostView.subviews) {
-                if ([view isKindOfClass:[UILabel class]]) {
-                    isAdded = YES;
-                }
-            }
-            
-            if (!isAdded) {
-                UILabel *textLabel = [UILabel new];
-                textLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:0.8];
-                textLabel.font = [UIFont systemFontOfSize:12];
-                textLabel.textColor = [UIColor whiteColor];
-                textLabel.textAlignment = NSTextAlignmentCenter;
-                textLabel.text = @"长按🌐切换到XX输入法";
-                [textLabel sizeToFit];
-                textLabel.layer.cornerRadius = 20;
-                textLabel.layer.masksToBounds = YES;
-                textLabel.frame = CGRectMake(20, hostView.bounds.size.height - 120, textLabel.bounds.size.width + 20, 40);
-                [hostView addSubview:textLabel];
-            }
-        }
-    }
-}
 
 @end
 
 
-// #pragma mark - UIApplication (SendEvent)
-// @interface UIApplication (SendEvent)
-// 
-// @end
-// 
-// @implementation UIApplication (SendEvent)
-// 
-// + (void)load {
-//     static dispatch_once_t onceToken;
-//     dispatch_once(&onceToken, ^{
-//         Class class = objc_getClass("UIApplication");
-//         SEL originalSelector = @selector(sendEvent:);
-//         SEL swizzledSelector = @selector(sendEventEx:);
-//         Method originalMethod = class_getInstanceMethod(class, originalSelector);
-//         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-//         method_exchangeImplementations(originalMethod, swizzledMethod);
-//     });
-// }
-// 
-// - (void)sendEventEx:(UIEvent *)event {
-//     NSLog(@"-[UIApplication sendEvent:]");
-//     [self sendEventEx: event];
-// }
-// 
-// @end
+#pragma mark - UIWindow (KeyboardWindow)
 
-#pragma mark - UIView (KeyboardWindow)
-@interface UIView (KeyboardWindow)
+/// iOS 16 之后获取 UIRemoteKeyboardWindow 的方法
+/// 1. 交换 -[UIView initWithFrame:], 判断类型是否为 UIRemoteKeyboardWindow
+/// 2. 交换 -[UIWindow _initWithFrame:debugName:windowScene:], 缩小影响范围. 可以通过断点 bt 打印调用堆栈, 查看真正的 UIWindow init 方法
+@interface UIWindow (KeyboardWindow)
 
 @end
 
-@implementation UIView (KeyboardWindow)
+@implementation UIWindow (KeyboardWindow)
 
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class class = objc_getClass("UIView");
-        SEL originalSelector = @selector(initWithFrame:);
-        SEL swizzledSelector = @selector(initWithFrameEx:);
+        Class class = [self class];
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wundeclared-selector"
+        SEL originalSelector = @selector(_initWithFrame:debugName:windowScene:);
+    #pragma clang diagnostic pop
+        SEL swizzledSelector = @selector(_initWithFrameEx:debugName:windowScene:);
         Method originalMethod = class_getInstanceMethod(class, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-        method_exchangeImplementations(originalMethod, swizzledMethod);
+        BOOL isAdded = class_addMethod(class,
+                                       originalSelector,
+                                       method_getImplementation(swizzledMethod),
+                                       method_getTypeEncoding(swizzledMethod));
+        if (isAdded) {
+            class_replaceMethod(class,
+                                swizzledSelector,
+                                method_getImplementation(originalMethod),
+                                method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
     });
 }
 
-- (void)initWithFrameEx:(CGRect)frame {
+- (instancetype)_initWithFrameEx:(CGRect)frame debugName:(NSString *)debugName windowScene:(UIWindowScene *)windowScene {
     if ([NSStringFromClass(self.class) isEqualToString:@"UIRemoteKeyboardWindow"]) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self addSubviewsOverKeyboardWindow:(UIWindow *)self];
         });
     }
-    [self initWithFrameEx:frame];
+    return [self _initWithFrameEx:frame debugName:debugName windowScene:windowScene];
 }
 
 - (void)addSubviewsOverKeyboardWindow:(UIWindow *)window {
